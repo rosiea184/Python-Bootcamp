@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+    <title>ToDo List</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>ToDo List</h1>
+    <form action="/add" method="POST">
+        <input type="text" name="task" placeholder="Enter a task" required>
+        <button type="submit" value="Submit">Add Task</button>
+    </form>
+    <form action="/clear_all" method="POST">
+        <button type="submit">Clear All Tasks</button>
+    </form>
+    <table>
+        <tr>
+            <th>#</th>
+            <th>Task</th>
+            <th>Due Date</th>
+            <th>Actions</th>
+        </tr>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{% if task.completed %}
+                <s>{{ task.text }}</s>
+                {% else %}{{ task.text }}{% endif %} 
+            </td>
+            <td>
+                <form action="/add_date/{{ loop.index0 }}" method="POST">
+                    <input type="date" name="due_date" value="{{ task.due_date }}" required>
+                    <button type="submit">Set Due Date</button>
+                </form>
+                {{ task.date | format_date }}
+            </td>
+            <td>
+                <a href="/delete/{{ loop.index0 }}">Delete</a> 
+                <form action="/cross_off/{{ loop.index0 }}" method="POST">
+                    <input type="checkbox" onchange="this.form.submit()" {% if task.completed %}checked{% endif %}>
+                </form>
+            </td>
+            </tr>
+            {% endfor %}
+        </table>
+    
+</body>
+
+
+
+</html>

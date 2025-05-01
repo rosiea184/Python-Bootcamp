@@ -7,9 +7,20 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')  # Render the home page using the index.html template
 
+@app.route('/user/<name>')
+def user(name):
+    return render_template('user.html', name=name)
+
 @app.route('/about')
 def about():
     return render_template('about.html', name="Alex", passion="Coding")    
+
+@app.route('/greet', methods=['GET','POST'])
+def greet():
+    if request.method == 'POST':
+        name = request.form['name']
+        return render_template('greet.html', name=name)  # Render the greet page with the user's name
+    return render_template('form.html')
 
 
 if __name__ == '__main__':

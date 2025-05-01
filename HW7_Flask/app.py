@@ -9,6 +9,17 @@ def home():
         return render_template('HW6.html', message = f"Welcome to my page {user_input}")  # Pass input to response.html
     return render_template('HW6.html')  # Render the form page
 
+@app.route('/feedback-hw7', methods=['GET','POST'])
+def feedback():
+    comment = request.form.get('comment')
+    if request.method == 'POST':
+        comment = request.form['comment']
+        return render_template('comment.html', comment=comment)  # Render the greet page with the user's name
+    return render_template('feedback-hw7.html')
+
+@app.route('/comment')
+def comment(comment):
+    return render_template('comment.html', comment=comment)
 
 
 if __name__ == '__main__':
