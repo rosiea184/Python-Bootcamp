@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+    <title>ToDo List</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>To Do List</h1>
+    <form action="/add" method="POST">
+        <input type="text" name="task" placeholder="Enter a task" required>
+        <button type="submit" value="Submit">Add Task</button>
+    </form>
+    <div>
+        <a href="{{ url_for('home', filter='all') }}"
+           class="{{ 'active' if active_filter=='all' else '' }}">All</a> |
+        <a href="{{ url_for('home', filter='pending') }}"
+           class="{{ 'active' if active_filter=='pending' else '' }}">Pending</a> |
+        <a href="{{ url_for('home', filter='completed') }}"
+           class="{{ 'active' if active_filter=='completed' else '' }}">Completed</a>
+      </div>
+    <table>
+        <tr>
+            <th>#</th>
+            <th>Task</th>
+            <!-- <th>Category</th> -->
+            <th>Actions</th>
+        </tr>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{% if task.completed %}
+                <s>{{ task.title }}</s>
+                {% else %}{{ task.title }}{% endif %} 
+            </td>
+            <!-- <td>[{{ task.category|capitalize }}] {{ task.title }}</td> -->
+            <td>
+                <a href="/delete/{{ task.id }}">Delete</a> 
+                <a href="/complete/{{ task.id }}">✅</a>
+                <a href="/edit/{{ task.id }}">✏️</a>
+            </td>
+            </tr>
+            {% endfor %}
+        </table>
+    
+</body>
+</html>
