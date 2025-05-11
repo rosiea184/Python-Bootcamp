@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">    
+<head>  
+    <title>Edit Task</title>  
+    <style>  
+        table, th, td {  
+            border: 1px solid black;  
+            border-collapse: collapse;  
+            padding: 8px;  
+        }  
+    </style>
+</head>
+<body>  
+    <h1>Edit Task</h1>  
+    <form method="POST">  
+        <input type="text" name="task" value="{{ task.title }}" required>  
+        <button type="submit" value="Submit">Update Task</button>  
+    </form>  
+    <a href="/">Back to Home</a>
+
+</html>
