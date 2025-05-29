@@ -35,6 +35,11 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           cd /home/fzansari/Python-Bootcamp/ToDo
+          python3 -m venv venv
+          source venv/bin/activate
+          pip3 install --upgrade pip
           pip3 install -r requirements.txt
-          sudo systemctl restart gunicorn ${{secrets.SUDOPWD }}
+          pkill gunicorn || true
+          nohup venv/bin/gunicorn --bind 0.0.0.0:5000 wsgi:app &
+          # sudo systemctl restart gunicorn ${{secrets.SUDOPWD }}
 
